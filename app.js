@@ -8,9 +8,13 @@ const methodOverride = require('method-override')
 const session = require('express-session');
 const expressError = require('./utils/expressError');
 const flash = require('connect-flash');
+const passport = require('passport');
+const localStrategy = require('passport-local');
+const User = require('./models/user');
 
-const campgrounds = require('./routes/campground');
-const reviews = require('./routes/review');
+const userRoutes = require('./routes/users');
+const campgroundRoutes = require('./routes/campground');
+const reviewRoutes = require('./routes/review');
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -33,6 +37,13 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -52,9 +63,9 @@ app.use((req, res, next) => {
     next();
 })
 
-
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
+app.use('/', userRoutes);
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/reviews', reviewRoutes);
 
 app.get('/', (req, res) => {
     res.render('home');
