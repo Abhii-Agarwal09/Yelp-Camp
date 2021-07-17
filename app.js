@@ -10,7 +10,7 @@ const expressError = require('./utils/expressError');
 const flash = require('connect-flash');
 
 const campgrounds = require('./routes/campground');
-const reviews = require('./models/review');
+const reviews = require('./routes/review');
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -21,7 +21,7 @@ app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public'))); 
 
 const sessionConfig = {
-    secret: thisshouldbeagreatsecret,
+    secret: 'thisshouldbeagreatsecret',
     resave: true,
     saveUninitialized: false,
     cookie: {
