@@ -6,6 +6,9 @@ const Campground = require('../models/campground');
 const { isLoggedIn, validateCampground, isAuthor } = require('../middleware');
 const campgrounds = require('../controllers/campgrounds');
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+
 router.route('/')
     .get(catchAsync(campgrounds.index))
     .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
