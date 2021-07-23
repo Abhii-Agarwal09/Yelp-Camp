@@ -1,7 +1,7 @@
 <%- layout('layouts/boilerplate') %>
 
     <div class="row">
-        <h1 class="text-center">New Camground</h1>
+        <h1 class="text-center">New Campground</h1>
         <div class="col-6 offset-3">
             <form action="/campgrounds" class="needs-validation" method="POST" novalidate enctype="multipart/form-data">
                 <!-- title -->
@@ -33,7 +33,10 @@
                     </div>
                 </div>
                 <!-- image -->
-                <input type="file" name="image" id="" multiple>
+                <div class="input-group mb-3 custom-file">
+                    <input type="file" class="form-control" id="image" name="image" multiple>
+                    <label class="input-group-text" for="image">Upload</label>
+                </div>
                 <!-- <div class="mb-3">
                     <label class="form-label" for="image">Image URL</label>
                     <input class="form-control" type="text" id="image" name="campground[image]" required>
