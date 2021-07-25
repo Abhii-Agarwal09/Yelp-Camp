@@ -51,11 +51,16 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET || 'thisshouldbeagreatsecret';
 
-const store = MongoStore.create({
+const store = new MongoStore({
     url: dbUrl,
     secret,
     touchAfter: 24 * 3600
 })
+// const store = MongoStore.create({
+//     url: dbUrl,
+//     secret,
+//     touchAfter: 24 * 3600
+// })
 
 store.on('error', function (e) {
     console.log("session store error", e);
